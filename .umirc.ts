@@ -13,9 +13,6 @@ export default defineConfig({
   base: `/${repo}/`,
   publicPath: `/${repo}/`,
   dynamicImport: {},
-  history: {
-    type: 'hash',
-  },
   postcssLoader: {},
   navs: [
     null,
