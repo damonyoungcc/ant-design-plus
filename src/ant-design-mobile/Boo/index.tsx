@@ -1,3 +1,9 @@
 import React from 'react';
-
-export default ({ title }: { title: string }) => <h1>{title}11</h1>;
+import { Button } from 'antd-mobile';
+import { AntOutline } from 'antd-mobile-icons';
+export default ({ title }: { title: string }) => (
+  <h1>
+    <AntOutline />
+    <Button color={'primary'}>{title}</Button>
+  </h1>
+);

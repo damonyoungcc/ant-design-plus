@@ -1,3 +1,8 @@
 import React from 'react';
+import { Button } from 'antd';
 
-export default ({ title }: { title: string }) => <h1>{title}1</h1>;
+export default ({ title }: { title: string }) => (
+  <h1>
+    <Button type={'primary'}>{title}</Button>
+  </h1>
+);

@@ -1,5 +1,7 @@
 import { defineConfig } from 'dumi';
 
+const repo = 'ant-design-plus';
+
 export default defineConfig({
   title: 'ant-design-plus',
   favicon:
@@ -8,4 +10,18 @@ export default defineConfig({
   outputPath: 'docs-dist',
   mode: 'site',
   hash: true,
+  base: `/${repo}/`,
+  publicPath: `/${repo}/`,
+  dynamicImport: {},
+  history: {
+    type: 'hash',
+  },
+  postcssLoader: {},
+  navs: [
+    null,
+    {
+      title: 'GitHub',
+      path: 'https://github.com/yangdepp/ant-design-plus',
+    },
+  ],
 });
