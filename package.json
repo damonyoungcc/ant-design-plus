@@ -13,8 +13,14 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
-  "module": "es/index.js",
   "typings": "es/index.d.ts",
+  "types": "es/index.d.ts",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "main": "./lib/index",
+  "module": "./es/index",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
@@ -27,6 +33,7 @@
     ]
   },
   "dependencies": {
+    "@babel/runtime": "^7.16.7",
     "react": "^16.12.0 || ^17.0.0"
   },
   "devDependencies": {
@@ -38,6 +45,7 @@
     "@umijs/plugin-antd-mobile": "^1.2.0",
     "@umijs/test": "^3.0.5",
     "dumi": "^1.1.0",
+    "dumi-theme-mobile": "^1.1.21",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",

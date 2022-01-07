@@ -7,6 +7,7 @@ nav:
   title: Components
   path: /components
 order: 2
+mobile: false
 ---
 
 ## Foo

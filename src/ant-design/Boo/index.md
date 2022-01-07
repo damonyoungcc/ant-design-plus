@@ -6,6 +6,7 @@ nav:
   title: Components
   path: /components
 order: 1
+mobile: false
 ---
 
 ## Boo
