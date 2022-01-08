@@ -2,21 +2,29 @@
 group:
   title: 'ant-design'
   path: '/ant-design'
+  order: 1
 nav:
-  title: Components
+  title: 组件
   path: /components
 order: 1
+title: 'Boo 组件'
 mobile: false
 ---
 
-## Boo
+## Boo 组件
 
-Demo:
+### 基础用法
 
-```tsx
-import React from 'react';
-import { antd } from '@yang/ant-design-plus';
-const { Boo } = antd;
+<code src="./demos/demo1.tsx" />
 
-export default () => <Boo title="antd Boo" />;
-```
+### 进阶用法
+
+<code src="./demos/demo1.tsx" />
+
+### 高级用法
+
+<code src="./demos/demo1.tsx" />
+
+### 白金用法
+
+<code src="./demos/demo1.tsx" />

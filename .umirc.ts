@@ -15,10 +15,18 @@ export default defineConfig({
   dynamicImport: {},
   postcssLoader: {},
   navs: [
-    null,
+    {
+      title: '组件',
+      path: '/components',
+    },
     {
       title: 'GitHub',
       path: 'https://github.com/yangdepp/ant-design-plus',
     },
   ],
+  themeConfig: {
+    hd: {
+      rules: [],
+    },
+  },
 });

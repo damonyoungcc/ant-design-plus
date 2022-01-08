@@ -2,19 +2,32 @@
 group:
   title: 'antd-design-mobile'
   path: '/antd-design-mobile'
+  order: 2
 nav:
-  title: Components
+  title: 组件
   path: /components
+order: 1
+toc: 'Boo'
 ---
 
-## Boo
+## Boo 组件
 
-Demo:
+基础用法
 
-```tsx
-import React from 'react';
-import { antdm } from '@yang/ant-design-plus';
-const { Boo } = antdm;
+<code src="./demos/demo1.tsx" />
 
-export default () => <Boo title="antdm Boo" />;
-```
+进阶用法
+
+<code src="./demos/demo2.tsx" />
+
+高级用法
+
+<code src="./demos/demo3.tsx" />
+
+黄金用法
+
+<code src="./demos/demo4.tsx" />
+
+白金用法
+
+<code src="./demos/demo5.tsx" />
