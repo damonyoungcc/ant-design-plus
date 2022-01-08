@@ -1,4 +1,7 @@
-import Boo from './boo';
-import AsyncSelect from './select';
+import Boo from './Boo';
 
-export default { Boo, AsyncSelect };
+export { Boo };
+
+export default {
+  Boo,
+};
