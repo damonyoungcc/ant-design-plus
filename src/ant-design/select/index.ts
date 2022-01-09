@@ -1,5 +1,9 @@
-import { AsyncSelect } from './async-select';
+import { attachPropertiesToComponent } from '../../utils/attach-properties-to-component';
+
+import { AsyncSelect, Option } from './async-select';
 
 export type { AsyncSelectProps } from './async-select';
 
-export default AsyncSelect;
+export default attachPropertiesToComponent(AsyncSelect, {
+  Option,
+});
