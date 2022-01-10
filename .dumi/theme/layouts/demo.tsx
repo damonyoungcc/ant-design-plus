@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useRef } from 'react';
 import type { IRouteComponentProps } from '@umijs/types';
 import { history } from 'dumi';
 import { context } from 'dumi/theme';
-// import TouchEmulator from 'f2-touchemulator';
+import TouchEmulator from 'f2-touchemulator';
 import vl from 'umi-hd';
 import flex from 'umi-hd/lib/flex';
 import vw from 'umi-hd/lib/vw';
@@ -28,7 +28,7 @@ const MobileDemoLayout: React.FC<IRouteComponentProps> = ({ children }) => {
   useEffect(() => {
     // Simulate the touch event of mobile terminal
     if (target.current) {
-      // TouchEmulator(target.current);
+      TouchEmulator(document);
     }
 
     // listen route change message
