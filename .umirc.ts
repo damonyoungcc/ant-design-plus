@@ -14,6 +14,10 @@ export default defineConfig({
   publicPath: `/${repo}/`,
   dynamicImport: {},
   postcssLoader: {},
+  fastRefresh: {},
+  alias: {
+    '@yang/antd-design-plus/es': process.cwd() + 'src',
+  },
   navs: [
     {
       title: '组件',
