@@ -1,10 +1,10 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import AsyncSelect from '../index';
 
 type OptionType = {
   label: ReactNode;
   value: string;
-  value1?: string;
+  value2?: string;
 };
 
 const fetchData = (): Promise<{
@@ -13,12 +13,20 @@ const fetchData = (): Promise<{
 }> => {
   const options: OptionType[] = [
     {
-      label: '春天',
+      label: '春',
       value: 'spring',
     },
     {
-      label: '夏天',
+      label: '夏',
       value: 'summer',
+    },
+    {
+      label: '秋',
+      value: 'autumn',
+    },
+    {
+      label: '冬',
+      value: 'winter',
     },
   ];
   return new Promise((resolve, reject) => {
@@ -26,7 +34,7 @@ const fetchData = (): Promise<{
       resolve({
         data: options,
       });
-    }, 300);
+    }, 1000);
   });
 };
 
@@ -34,6 +42,7 @@ export default () => {
   return (
     <>
       <AsyncSelect<OptionType>
+        optionLabelProp="label"
         allowClear
         style={{ width: 140 }}
         request={async () => {
@@ -41,10 +50,10 @@ export default () => {
           const { data } = res || {};
           return data;
         }}
-        trigger="open"
+        trigger="auto"
         onLabel={(item) => item.label}
-        onValue={(item) => item.value}
-        onOption={(item) => item.label + 'Option'}
+        onValue={(item) => item?.value}
+        onOption={(item) => item?.label + ' 🤡'}
       />
     </>
   );

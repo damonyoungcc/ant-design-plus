@@ -1,9 +1,3 @@
-/**
- * 传入一个Promise，在组件内部进行请求
- * 用户也可以不传，当普通Select使用
- * 可以定制用户的label 和 value 和 option
- * 触发时机有click 和 自动，默认click
- */
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { mergeProps } from '../../utils/with-default-props';
@@ -13,14 +7,10 @@ export const { Option } = Select;
 type DefaultOptionType = {
   label?: ReactNode;
   value?: string;
-};
+} & Record<string, any>;
 
 type SelectProps = React.ComponentProps<typeof Select>;
 type ActionType = 'open' | 'auto';
-
-export type RequestData<T> = {
-  data: T[] | undefined;
-} & Record<string, any>;
 
 export interface AsyncSelectProps<T> extends SelectProps {
   trigger?: ActionType;
@@ -66,9 +56,9 @@ export const AsyncSelect = <T extends DefaultOptionType>(p: AsyncSelectProps<T>)
     }
   }, []);
 
+  // TODO 逻辑重复, loading可以用自定义hook
   const onDropDown = (open: boolean) => {
-    if (open && trigger === 'open') {
-      console.log('111');
+    if (open && trigger === 'open' && !options.length) {
       setLoading(true);
       request?.()
         .then((res) => {
@@ -98,7 +88,7 @@ export const AsyncSelect = <T extends DefaultOptionType>(p: AsyncSelectProps<T>)
           const { label, value } = item;
           return (
             <Option
-              key={index}
+              key={value}
               value={onValue ? onValue(item) : value}
               label={onLabel ? onLabel(item) : label}
             >
