@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES6",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -12,8 +12,9 @@
     "baseUrl": "./",
     "strict": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"]
+      "@yang/ant-design-plus": ["src/index.ts"],
+      "@yang/ant-design-plus/src/*": ["src/*"],
+      "@yang/ant-design-plus/es/*": ["src/*"]
     },
     "allowSyntheticDefaultImports": true
   },
