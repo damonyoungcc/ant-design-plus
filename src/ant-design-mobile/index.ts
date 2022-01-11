@@ -1,6 +1,6 @@
-export { default as Boo } from './Boo';
+export { default as Boo } from './boo';
 
-import Boo from './Boo';
+import Boo from './boo';
 
 export default {
   Boo,
