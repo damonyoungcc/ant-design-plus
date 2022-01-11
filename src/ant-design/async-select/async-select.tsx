@@ -6,7 +6,7 @@ export const { Option } = Select;
 
 type DefaultOptionType = {
   label?: ReactNode;
-  value?: string;
+  value?: string | number | null;
 } & Record<string, any>;
 
 type SelectProps = React.ComponentProps<typeof Select>;
@@ -16,7 +16,7 @@ export interface AsyncSelectProps<T> extends SelectProps {
   trigger?: ActionType;
   request?: () => Promise<T[]>;
   onLabel?: (item: T) => ReactNode;
-  onValue?: (item: T) => string;
+  onValue?: (item: T) => string | number | null;
   onOption?: (item: T) => ReactNode;
 }
 

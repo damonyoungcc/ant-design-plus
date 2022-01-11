@@ -28,6 +28,17 @@ export default defineConfig({
       path: 'https://github.com/yangdepp/ant-design-plus',
     },
   ],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+      'antd',
+    ],
+  ],
   themeConfig: {
     hd: {
       rules: [],
