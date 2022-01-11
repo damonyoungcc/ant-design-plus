@@ -16,7 +16,7 @@ export default defineConfig({
   postcssLoader: {},
   fastRefresh: {},
   alias: {
-    '@yang/antd-design-plus/es': process.cwd() + 'src',
+    '@yang/ant-design-plus': process.cwd() + '/src',
   },
   navs: [
     {

@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
-import AsyncSelect from '../index';
+import { antd } from '@yang/ant-design-plus';
+
+const { AsyncSelect } = antd;
 
 type OptionType = {
   label: ReactNode;
@@ -52,7 +54,7 @@ export default () => {
         }}
         trigger="auto"
         onLabel={(item) => item.label}
-        onValue={(item) => item?.value}
+        onValue={(item) => item.value}
         onOption={(item) => item?.label + ' 🤡'}
       />
     </>
