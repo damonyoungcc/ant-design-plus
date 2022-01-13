@@ -13,7 +13,7 @@ export interface AsyncSelectProps<ValueType = any> extends Omit<SelectProps<Valu
   customOption?: (option: ValueType, index: number, options: ValueType[]) => ReactNode;
 }
 
-interface DefaultValueType {
+export interface DefaultValueType {
   key?: string;
   disabled?: boolean;
   label: ReactNode;
