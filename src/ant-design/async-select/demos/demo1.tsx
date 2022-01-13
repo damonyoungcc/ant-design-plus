@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
-import { Space, Select } from 'antd';
+import React, { ReactNode, useState } from 'react';
+import { Space } from 'antd';
+
+import { mockAsyncFetchData } from '../../../tools/mock';
 
 import { antd } from '@yang/ant-design-plus';
-import { mockAsyncFetchData } from './utils/mock';
 
 const { AsyncSelect } = antd;
 const { Option } = AsyncSelect;
@@ -10,25 +11,28 @@ const { Option } = AsyncSelect;
 type OptionType = {
   value: number;
   label: ReactNode;
+  a: 1;
+};
+
+type OtherType = {
+  id: number;
+  name: string;
 };
 
 export default () => {
-  // TODO value类型有问题
-  const handleChange = (value: unknown) => {
+  const [value, setValue] = useState<number>();
+
+  const handleChange = (value: number) => {
     console.log(value);
+    setValue(value);
   };
-  const handleChange1 = (value: unknown) => {
-    console.log(value);
-  };
+
   return (
     <>
-      <Select
-        defaultValue={'1'}
-        options={[{ label: 1, value: 1 }]}
-        onChange={handleChange1}
-      ></Select>
       <Space>
-        <AsyncSelect<OptionType>
+        <AsyncSelect
+          defaultValue={1}
+          value={value}
           style={{ width: 120 }}
           request={async () => {
             const res = await mockAsyncFetchData<OptionType>(1000);
@@ -37,7 +41,8 @@ export default () => {
           }}
           onChange={handleChange}
         />
-        <AsyncSelect<OptionType>
+        <AsyncSelect
+          defaultValue={1}
           trigger="auto"
           style={{ width: 120 }}
           request={async () => {
@@ -47,7 +52,8 @@ export default () => {
           }}
           onChange={handleChange}
         />
-        <AsyncSelect<OptionType>
+        <AsyncSelect
+          trigger="down"
           style={{ width: 120 }}
           request={async () => {
             const res = await mockAsyncFetchData<OptionType>(1000);
@@ -55,20 +61,63 @@ export default () => {
             return data;
           }}
           onChange={handleChange}
-          onOption={(item) => {
+        />
+        <AsyncSelect
+          style={{ width: 120 }}
+          request={async () => {
+            const res = await mockAsyncFetchData<OptionType>(1000);
+            const { data } = res || {};
+            return data;
+          }}
+          optionLabelProp="value"
+          onChange={handleChange}
+          customOption={(item: OptionType, index: number) => {
             return (
-              <>
-                {item?.map((ele, index) => {
-                  return (
-                    <Option key={index} label={ele?.label} value={ele.value}>
-                      {ele?.label}
-                    </Option>
-                  );
-                })}
-              </>
+              <Option value={item.value} disabled={index > 1} key={item.value}>
+                {item.label + ' 1'}
+              </Option>
             );
           }}
         />
+        <AsyncSelect
+          style={{ width: 120 }}
+          request={async () => {
+            const res = await mockAsyncFetchData<OptionType>(1000);
+            const { data } = res || {};
+            return data;
+          }}
+          optionLabelProp="value"
+          onChange={handleChange}
+          customOption={(item: OptionType, index: number) => {
+            return (
+              <Option value={item.value} disabled={index > 1} key={item.value}>
+                {item.label + ' 1'}
+              </Option>
+            );
+          }}
+        />
+        <AsyncSelect
+          style={{ width: 120 }}
+          request={async () => {
+            const res = await mockAsyncFetchData<OtherType>(1000, true, [
+              { id: 1, name: 'A' },
+              { id: 2, name: 'B' },
+            ]);
+            const { data } = res || {};
+            return data;
+          }}
+          onChange={handleChange}
+          customOption={(item: OtherType, index: number) => {
+            return (
+              <Option value={item.id} disabled={index > 0} key={item.id}>
+                {item.name + ' + 1'}
+              </Option>
+            );
+          }}
+        />
+        <AsyncSelect style={{ width: 120 }} onChange={handleChange}>
+          <Option value="1">1</Option>
+        </AsyncSelect>
       </Space>
     </>
   );
