@@ -1,87 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Select } from 'antd';
+import { SelectProps } from 'antd/es/select';
 import { mergeProps } from '../../utils/with-default-props';
 
 export const { Option } = Select;
 
-type SelectProps = React.ComponentProps<typeof Select>;
 type ActionType = 'open' | 'auto';
 
-export interface AsyncSelectProps<T> extends SelectProps {
+export interface AsyncSelectProps<ValueType = any>
+  extends Omit<SelectProps<ValueType>, 'options' | 'children'> {
   trigger?: ActionType;
-  request?: () => Promise<T[]>;
-  onOption?: (item: T[] | undefined) => any;
+  request: () => Promise<ValueType[]>;
+}
+
+interface DefaultValueType {
+  key?: string;
+  disabled?: boolean;
+  label: ReactNode;
+  value: string | number;
 }
 
 const defaultProps = {
   trigger: 'open',
 };
 
-export const AsyncSelect = <T extends Record<string, any>>(p: AsyncSelectProps<T>) => {
+export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSelectProps) => {
   const props = mergeProps(defaultProps, p);
-  const { trigger, request, onOption, children, options, ...restProps } = props;
-  const [optionsData, setOptionsData] = useState<T[]>();
+  const { trigger, request, ...restProps } = props;
+  const [options, setOptions] = useState<ValueType[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (trigger === 'auto') {
       setLoading(true);
-      request?.()
-        .then((res) => {
-          setOptionsData(res);
-        })
-        .catch(() => {
-          setOptionsData([]);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      request?.().then((res) => {
+        setOptions(res);
+      });
+      setLoading(false);
     }
   }, []);
 
   // TODO 逻辑重复, loading可以用自定义hook
   const onDropDown = (open: boolean) => {
-    console.log(optionsData);
-    if (open && trigger === 'open' && !optionsData?.length) {
+    if (open && trigger === 'open' && !options.length) {
       setLoading(true);
-      request?.()
-        .then((res) => {
-          setOptionsData(res);
-        })
-        .catch(() => {
-          setOptionsData([]);
-        })
-        .finally(() => {
-          setOpen(open);
-          setLoading(false);
-        });
+      request?.().then((res) => {
+        setOptions(res);
+      });
+      setOpen(open);
     } else {
       setOpen(open);
     }
   };
 
   const render = () => {
-    // 如果传入 options || children ，则自动降级为普通Select
-    if (children || options) {
-      return <Select {...restProps}>{children}</Select>;
-    }
-    // 不传onOptions，默认用户传入的Promise返回值符合options数据结构
-    if (!onOption) {
-      return (
-        <Select
-          open={open}
-          loading={loading}
-          onDropdownVisibleChange={onDropDown}
-          options={optionsData}
-          {...restProps}
-        />
-      );
-    }
     return (
-      <Select open={open} loading={loading} onDropdownVisibleChange={onDropDown} {...restProps}>
-        {onOption(optionsData)}
-      </Select>
+      <Select<ValueType>
+        open={open}
+        loading={loading}
+        onDropdownVisibleChange={onDropDown}
+        options={options}
+        {...restProps}
+      />
     );
   };
   return render();
