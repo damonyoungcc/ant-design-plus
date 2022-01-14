@@ -21,7 +21,7 @@ export interface DefaultValueType {
 }
 
 const defaultProps = {
-  trigger: 'open',
+  trigger: 'down',
 };
 
 export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSelectProps) => {

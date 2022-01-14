@@ -14,14 +14,13 @@ const defaultOptions: any = [
   {
     label: '小丑 🤡',
     value: 3,
-    disabled: true,
   },
 ];
 
 const mockAsyncFetchData = <T>(
   delay: number,
-  isSuccess: boolean = true,
   options?: T[],
+  isSuccess: boolean = true,
 ): Promise<{ data: T[] }> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

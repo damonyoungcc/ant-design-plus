@@ -7,12 +7,39 @@ nav:
   title: 组件
   path: /components
 order: 1
-title: 'AsyncSlect 组件'
+title: 'AsyncSlect 异步选择器'
 mobile: false
 ---
 
-## AsyncSlect 组件
+## AsyncSlect 异步选择器
+
+### 何时使用
+
+- 需要异步获取下拉菜单数据给用户选择操作。
+- 完全继承了`antd`中的[Select](https://ant-design.gitee.io/components/select-cn/)组件属性，在此基础上做了相应的拓展和逻辑封装，大大简化了代码。
 
 ### 基础用法
 
+默认异步返回的数据结构为 `{label: ReactNode; value: string}`
+
 <code src="./demos/demo1.tsx" />
+
+### 触发时机
+
+<code src="./demos/demo2.tsx">
+
+### 自定义下拉展示
+
+如果异步返回的数据结构 `不是` `{ label: string, value: string }`，则可传入 `customOption`自定义
+
+<code src="./demos/demo3.tsx">
+
+### API
+
+`AsyncSelect` 异步选择器组件完全继承了[antd Select](https://ant-design.gitee.io/components/select-cn/#API) 组件的`API`
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| trigger | 异步数据触发请求的时机 | `'auto' \| 'down' \| 'open'` | `'down'` |
+| request | 获取选择器下拉列表数据的方法 | `() => Promise<ValueType[]>` | - |
+| customOption | 自定义`Option`的展示 | `(option: ValueType, index: number, options: ValueType[]) => ReactNode` | - |
