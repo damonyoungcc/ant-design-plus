@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/es/select';
 
@@ -14,6 +14,7 @@ export interface AsyncSelectProps<ValueType = any>
   request: () => Promise<ValueType[] | undefined>;
   customOption?: (option: ValueType, index: number, options: ValueType[]) => ReactNode;
   customLoading?: ReactNode;
+  alwaysRefresh?: boolean;
 }
 
 export interface DefaultValueType {
@@ -25,23 +26,33 @@ export interface DefaultValueType {
 
 const defaultProps = {
   trigger: 'open',
+  alwaysRefresh: false,
+  customLoading: <Spin size="small" />,
 };
 
 export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSelectProps) => {
   const props = mergeProps(defaultProps, p);
-  const { trigger, request, customOption, customLoading, notFoundContent, ...restProps } = props;
+  const {
+    trigger,
+    request,
+    customOption,
+    customLoading,
+    open: o,
+    alwaysRefresh,
+    ...restProps
+  } = props;
 
+  const [open, setOpen] = useState(o);
   const { data: options = [], loading, run } = useRequest<ValueType>(request, trigger);
 
-  const onFocus = () => {
-    if (trigger === 'open' && !options.length) {
-      console.log('我被手动触发了');
+  const onDropdown = (open: boolean) => {
+    setOpen(open);
+    if (open && alwaysRefresh) {
       run();
     }
-  };
-
-  const renderCustomLoding = () => {
-    return customLoading || <Spin size="small" />;
+    if (open && !options.length) {
+      run();
+    }
   };
 
   const render = () => {
@@ -49,9 +60,10 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     if (!customOption) {
       return (
         <Select<ValueType>
-          onFocus={onFocus}
+          open={open}
+          onDropdownVisibleChange={onDropdown}
           options={options}
-          notFoundContent={loading ? renderCustomLoding() : undefined}
+          notFoundContent={loading ? customLoading : undefined}
           {...restProps}
         />
       );
@@ -60,8 +72,9 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     // custom option
     return (
       <Select<ValueType>
-        notFoundContent={loading ? renderCustomLoding() : undefined}
-        onFocus={onFocus}
+        open={open}
+        onDropdownVisibleChange={onDropdown}
+        notFoundContent={loading ? customLoading : undefined}
         {...restProps}
       >
         {options.map((item, index) => {

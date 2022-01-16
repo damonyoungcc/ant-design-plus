@@ -41,7 +41,7 @@ const mockAsyncFetchData = <T>({
     options: o,
     responseType: r,
   } = mergeProps(defaultProps, { delay, options, responseType });
-  console.log('我被调用了');
+  console.log('请求数据中...');
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'fail') {
