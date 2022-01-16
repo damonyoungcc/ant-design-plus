@@ -1,16 +1,19 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/es/select';
+
 import { mergeProps } from '../../utils/with-default-props';
+import { useRequest } from './use-request';
 
 export const { Option } = Select;
 
-type ActionType = 'auto' | 'open' | 'down';
-
-export interface AsyncSelectProps<ValueType = any> extends Omit<SelectProps<ValueType>, 'options'> {
+export type ActionType = 'auto' | 'open';
+export interface AsyncSelectProps<ValueType = any>
+  extends Omit<SelectProps<ValueType>, 'options' | 'children'> {
   trigger?: ActionType;
-  request?: () => Promise<ValueType[]>;
+  request: () => Promise<ValueType[] | undefined>;
   customOption?: (option: ValueType, index: number, options: ValueType[]) => ReactNode;
+  customLoading?: ReactNode;
 }
 
 export interface DefaultValueType {
@@ -21,65 +24,34 @@ export interface DefaultValueType {
 }
 
 const defaultProps = {
-  trigger: 'down',
+  trigger: 'open',
 };
 
 export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSelectProps) => {
   const props = mergeProps(defaultProps, p);
-  const { trigger, request, customOption, children, ...restProps } = props;
+  const { trigger, request, customOption, customLoading, notFoundContent, ...restProps } = props;
 
-  const [options, setOptions] = useState<ValueType[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const { data: options = [], loading, run } = useRequest<ValueType>(request, trigger);
 
-  useEffect(() => {
-    if (trigger === 'auto') {
-      setLoading(true);
-      request?.()
-        .then((res) => {
-          setOptions(res);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, []);
-
-  // TODO 逻辑重复, loading可以用自定义hook
-  const onDropDown = (open: boolean) => {
-    if (trigger === 'down') {
-      setOpen(open);
-    }
-    if (open && trigger != 'auto' && !options.length) {
-      setLoading(true);
-      request?.()
-        .then((res) => {
-          setOptions(res);
-        })
-        .finally(() => {
-          setOpen(open);
-          setLoading(false);
-        });
-    } else {
-      setOpen(open);
+  const onFocus = () => {
+    if (trigger === 'open' && !options.length) {
+      console.log('我被手动触发了');
+      run();
     }
   };
 
-  const render = () => {
-    //  if have children props auto relegation antd Seleect
-    if (children) {
-      return <Select<ValueType> {...restProps}>{children}</Select>;
-    }
+  const renderCustomLoding = () => {
+    return customLoading || <Spin size="small" />;
+  };
 
+  const render = () => {
     // no props customOption means use options render data
     if (!customOption) {
       return (
         <Select<ValueType>
-          open={open}
-          loading={trigger !== 'down' ? loading : undefined}
-          onDropdownVisibleChange={onDropDown}
+          onFocus={onFocus}
           options={options}
-          notFoundContent={loading ? <Spin size="small" /> : null}
+          notFoundContent={loading ? renderCustomLoding() : undefined}
           {...restProps}
         />
       );
@@ -88,10 +60,8 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     // custom option
     return (
       <Select<ValueType>
-        open={open}
-        loading={trigger !== 'down' ? loading : undefined}
-        notFoundContent={loading ? <Spin size="small" /> : null}
-        onDropdownVisibleChange={onDropDown}
+        notFoundContent={loading ? renderCustomLoding() : undefined}
+        onFocus={onFocus}
         {...restProps}
       >
         {options.map((item, index) => {

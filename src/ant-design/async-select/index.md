@@ -26,13 +26,21 @@ mobile: false
 
 ### 触发时机
 
-<code src="./demos/demo2.tsx">
+<code src="./demos/demo2.tsx" />
 
 ### 自定义下拉展示
 
 如果异步返回的数据结构 `不是` `{ label: string, value: string }`，则可传入 `customOption`自定义
 
-<code src="./demos/demo3.tsx">
+<code src="./demos/demo3.tsx" />
+
+### 自定义加载样式
+
+<code src="./demos/demo4.tsx" />
+
+### 异常处理
+
+<code src="./demos/demo5.tsx" />
 
 ### API
 
@@ -40,6 +48,7 @@ mobile: false
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| trigger | 异步数据触发请求的时机 | `'auto' \| 'down' \| 'open'` | `'down'` |
-| request | 获取选择器下拉列表数据的方法 | `() => Promise<ValueType[]>` | - |
+| trigger | 异步数据触发请求的时机 | `'auto' \| 'down'` | `'down'` |
+| request | 获取选择器下拉列表数据的方法 | `() => Promise<ValueType[] \| undefined>` | - |
 | customOption | 自定义`Option`的展示 | `(option: ValueType, index: number, options: ValueType[]) => ReactNode` | - |
+| customLoading | 自定义加载样式 | `ReactNode` | - |

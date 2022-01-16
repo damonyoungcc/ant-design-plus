@@ -2,6 +2,8 @@
  * @param options: <T>[], @param delay: number
  * @returns Promise<{data: T[]}>
  */
+import { mergeProps } from '../utils/with-default-props';
+
 const defaultOptions: any = [
   {
     label: '小明 👦🏻',
@@ -17,21 +19,47 @@ const defaultOptions: any = [
   },
 ];
 
-const mockAsyncFetchData = <T>(
-  delay: number,
-  options?: T[],
-  isSuccess: boolean = true,
-): Promise<{ data: T[] }> => {
+type ResponseType = 'success' | 'fail' | 'random';
+
+const defaultProps = {
+  delay: 1000,
+  options: defaultOptions,
+  responseType: 'success',
+};
+
+const mockAsyncFetchData = <T>({
+  delay,
+  options,
+  responseType,
+}: {
+  delay: number;
+  options?: T[];
+  responseType?: ResponseType;
+}): Promise<{ data: T[] }> => {
+  const {
+    delay: d,
+    options: o,
+    responseType: r,
+  } = mergeProps(defaultProps, { delay, options, responseType });
+  console.log('我被调用了');
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (isSuccess) {
-        resolve({
-          data: options || (defaultOptions as T[]),
-        });
-      } else {
-        reject(new Error('错误'));
+      if (r === 'fail') {
+        reject(new Error('请求错误'));
       }
-    }, delay);
+      if (r === 'success') {
+        resolve({
+          data: o,
+        });
+      }
+      if (r === 'random') {
+        Math.random() > 0.5
+          ? resolve({
+              data: o,
+            })
+          : reject(new Error('请求错误'));
+      }
+    }, d);
   });
 };
 

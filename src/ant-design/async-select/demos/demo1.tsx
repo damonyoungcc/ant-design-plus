@@ -1,9 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import { Space } from 'antd';
+import { antd } from '@yang/ant-design-plus';
 
 import { mockAsyncFetchData } from '../../../tools/mock';
-
-import { antd } from '@yang/ant-design-plus';
 
 const { AsyncSelect } = antd;
 
@@ -28,7 +27,7 @@ export default () => {
           style={{ width: 120 }}
           placeholder="轻点我"
           request={async () => {
-            const res = await mockAsyncFetchData<ValueType>(1000);
+            const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
             const { data } = res || {};
             return data;
           }}

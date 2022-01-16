@@ -44,4 +44,8 @@ export default defineConfig({
       rules: [],
     },
   },
+  locale: {
+    default: 'zh-CN',
+    antd: true,
+  },
 });
