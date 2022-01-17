@@ -54,7 +54,7 @@ export default () => {
           customOption={(item: ValueType, index: number) => {
             return (
               <Option value={item.id} disabled={index > 1} key={item.id}>
-                {item.name + ' 👉🏻  😁'}
+                <span>{`${item.name} 👉🏻 😁`}</span>
               </Option>
             );
           }}

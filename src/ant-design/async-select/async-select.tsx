@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/es/select';
 
@@ -25,23 +25,30 @@ export interface DefaultValueType {
 
 const defaultProps = {
   trigger: 'open',
+  customLoading: <Spin size="small" />,
 };
 
 export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSelectProps) => {
   const props = mergeProps(defaultProps, p);
-  const { trigger, request, customOption, customLoading, notFoundContent, ...restProps } = props;
+  const {
+    trigger,
+    request,
+    customOption,
+    customLoading,
+    open: o,
+    onDropdownVisibleChange,
+    ...restProps
+  } = props;
 
+  const [open, setOpen] = useState(o);
   const { data: options = [], loading, run } = useRequest<ValueType>(request, trigger);
 
-  const onFocus = () => {
-    if (trigger === 'open' && !options.length) {
-      console.log('我被手动触发了');
+  const onDropdown = (open: boolean) => {
+    setOpen(open);
+    if (open && !options.length) {
       run();
     }
-  };
-
-  const renderCustomLoding = () => {
-    return customLoading || <Spin size="small" />;
+    onDropdownVisibleChange && onDropdownVisibleChange(open);
   };
 
   const render = () => {
@@ -49,9 +56,10 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     if (!customOption) {
       return (
         <Select<ValueType>
-          onFocus={onFocus}
+          open={open}
+          onDropdownVisibleChange={onDropdown}
           options={options}
-          notFoundContent={loading ? renderCustomLoding() : undefined}
+          notFoundContent={loading ? customLoading : undefined}
           {...restProps}
         />
       );
@@ -60,8 +68,9 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     // custom option
     return (
       <Select<ValueType>
-        notFoundContent={loading ? renderCustomLoding() : undefined}
-        onFocus={onFocus}
+        open={open}
+        onDropdownVisibleChange={onDropdown}
+        notFoundContent={loading ? customLoading : undefined}
         {...restProps}
       >
         {options.map((item, index) => {

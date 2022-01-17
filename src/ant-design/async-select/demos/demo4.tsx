@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Space, message } from 'antd';
+import { Space } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { antd } from '@yang/ant-design-plus';
 
@@ -34,13 +34,13 @@ export default () => {
           request={async () => {
             try {
               const res = await mockAsyncFetchData<ValueType>({
-                delay: 1000,
+                delay: 3000,
                 responseType: 'fail',
               });
               const { data } = res || {};
               return data;
             } catch (error: any) {
-              message.error(error?.message);
+              console.log(error?.message);
             }
           }}
           onChange={handleChange}

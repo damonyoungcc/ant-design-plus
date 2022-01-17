@@ -26,6 +26,9 @@ mobile: false
 
 ### 触发时机
 
+- `trigger` 为 `'auto'`可以在页面挂载时完成异步数据请求
+- `trigger` 为 `'open'`可以在展开下拉菜单时触发异步数据请求，内部使用了`onDropdownVisibleChange`
+
 <code src="./demos/demo2.tsx" />
 
 ### 自定义下拉展示
@@ -40,6 +43,8 @@ mobile: false
 
 ### 异常处理
 
+如果异步请求返回异常，即返回的`data` 为 `[] | undefined`,再次点开下拉菜单会重新请求数据。
+
 <code src="./demos/demo5.tsx" />
 
 ### API
@@ -49,6 +54,6 @@ mobile: false
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | trigger | 异步数据触发请求的时机 | `'auto' \| 'down'` | `'down'` |
-| request | 获取选择器下拉列表数据的方法 | `() => Promise<ValueType[] \| undefined>` | - |
+| request | 获取选择器下拉菜单数据的方法 | `() => Promise<ValueType[] \| undefined>` | - |
 | customOption | 自定义`Option`的展示 | `(option: ValueType, index: number, options: ValueType[]) => ReactNode` | - |
 | customLoading | 自定义加载样式 | `ReactNode` | - |
