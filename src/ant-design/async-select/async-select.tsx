@@ -14,7 +14,6 @@ export interface AsyncSelectProps<ValueType = any>
   request: () => Promise<ValueType[] | undefined>;
   customOption?: (option: ValueType, index: number, options: ValueType[]) => ReactNode;
   customLoading?: ReactNode;
-  alwaysRefresh?: boolean;
 }
 
 export interface DefaultValueType {
@@ -26,7 +25,6 @@ export interface DefaultValueType {
 
 const defaultProps = {
   trigger: 'open',
-  alwaysRefresh: false,
   customLoading: <Spin size="small" />,
 };
 
@@ -38,7 +36,7 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
     customOption,
     customLoading,
     open: o,
-    alwaysRefresh,
+    onDropdownVisibleChange,
     ...restProps
   } = props;
 
@@ -47,12 +45,10 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
 
   const onDropdown = (open: boolean) => {
     setOpen(open);
-    if (open && alwaysRefresh) {
-      run();
-    }
     if (open && !options.length) {
       run();
     }
+    onDropdownVisibleChange && onDropdownVisibleChange(open);
   };
 
   const render = () => {

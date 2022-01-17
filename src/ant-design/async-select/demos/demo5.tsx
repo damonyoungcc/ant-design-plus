@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Space, message } from 'antd';
 import { antd } from '@yang/ant-design-plus';
 
@@ -38,19 +38,19 @@ export default () => {
           onChange={handleChange}
         />
         <AsyncSelect
-          style={{ width: 150 }}
-          placeholder="随机返回结果"
+          trigger="auto"
+          style={{ width: 170 }}
+          placeholder="页面挂载时请求异常"
           request={async () => {
             try {
               const res = await mockAsyncFetchData<ValueType>({
                 delay: 1000,
-                responseType: 'random',
+                responseType: 'fail',
               });
               const { data } = res || {};
               return data;
             } catch (error: any) {
               console.log(error?.message);
-              message.error(error?.message);
             }
           }}
           onChange={handleChange}

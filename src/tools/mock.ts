@@ -27,21 +27,13 @@ const defaultProps = {
   responseType: 'success',
 };
 
-const mockAsyncFetchData = <T>({
-  delay,
-  options,
-  responseType,
-}: {
+const mockAsyncFetchData = <T>(props: {
   delay: number;
   options?: T[];
   responseType?: ResponseType;
 }): Promise<{ data: T[] }> => {
-  const {
-    delay: d,
-    options: o,
-    responseType: r,
-  } = mergeProps(defaultProps, { delay, options, responseType });
-  console.log('请求数据中...');
+  const { delay: d, options: o, responseType: r } = mergeProps(defaultProps, props);
+  console.log('数据请求中...');
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (r === 'fail') {
@@ -59,6 +51,7 @@ const mockAsyncFetchData = <T>({
             })
           : reject(new Error('请求错误'));
       }
+      console.log('数据请求结束...');
     }, d);
   });
 };
