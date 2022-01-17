@@ -53,7 +53,7 @@ mobile: false
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| trigger | 异步数据触发请求的时机 | `'auto' \| 'down'` | `'down'` |
+| trigger | 异步数据触发请求的时机 | `'auto' \| 'open'` | `'open'` |
 | request | 获取选择器下拉菜单数据的方法 | `() => Promise<ValueType[] \| undefined>` | - |
 | customOption | 自定义`Option`的展示 | `(option: ValueType, index: number, options: ValueType[]) => ReactNode` | - |
 | customLoading | 自定义加载样式 | `ReactNode` | - |
