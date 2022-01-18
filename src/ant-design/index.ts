@@ -1,4 +1,4 @@
-import Boo from './boo';
 import AsyncSelect from './async-select';
+import QueryFilter from './query-filter';
 
-export default { Boo, AsyncSelect };
+export default { AsyncSelect, QueryFilter };
