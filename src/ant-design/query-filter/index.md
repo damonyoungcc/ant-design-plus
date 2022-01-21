@@ -22,6 +22,10 @@ mobile: false
 
 <code src="./demos/demo1.tsx" />
 
+### class 用法
+
+<code src="./demos/demo2.tsx" />
+
 ### API
 
 | 属性 | 说明 | 类型 | 默认值 |
