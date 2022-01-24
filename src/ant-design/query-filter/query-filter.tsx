@@ -1,10 +1,11 @@
-import React, { useState, ReactNode, forwardRef } from 'react';
+import React, { useState, ReactNode, forwardRef, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { Form, Row, Col, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { FormProps, FormInstance } from 'antd/es/form';
 import { mergeProps } from '../../utils/with-default-props';
 import RcResizeObserver from 'rc-resize-observer';
+import isBrowser from '../../utils/is-browser';
 
 interface QueryFilterProps extends FormProps {
   children: ReactNode;
@@ -17,24 +18,15 @@ interface QueryFilterProps extends FormProps {
   split?: boolean;
 }
 
-const CONFIG_SPAN_BREAKPOINTS = {
-  xs: 513,
-  sm: 513,
-  md: 785,
-  lg: 992,
-  xl: 1057,
-  xxl: Infinity,
-};
-
 const BREAKPOINTS = {
   default: [
-    [513, 1, 'vertical'],
-    [701, 2, 'vertical'],
-    [1062, 3, 'horizontal'],
-    [1352, 3, 'horizontal'],
-    [Infinity, 4, 'horizontal'],
+    [0, 531, 1, 'vertical'],
+    [531, 701, 2, 'vertical'],
+    [701, 1062, 3, 'horizontal'],
+    [1062, 1352, 3, 'horizontal'],
+    [1352, Infinity, 4, 'horizontal'],
   ],
-};
+} as const;
 
 const defaultProps = {
   defaultCollapsed: true,
@@ -43,11 +35,16 @@ const defaultProps = {
   preserve: true,
 };
 
+const defaultWidth = isBrowser() ? document.body.clientWidth : 1024;
+
 export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) => {
   const props = mergeProps(defaultProps, p);
   const { onCollapse, defaultCollapsed, labelWidth, children, ...restProps } = props;
 
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [width, setWidth] = useState(defaultWidth);
+  const [spanSize, setSpanSize] = useState<number>();
+  const [offsetSize, setOffsetSize] = useState<number>();
 
   const handleClick = () => {
     setCollapsed(!collapsed);
@@ -56,14 +53,28 @@ export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) =
 
   const renderFormItem = () => {
     return React.Children.map(children, (child, i) => {
-      return <Col span={8}>{React.cloneElement(child as ReactElement)}</Col>;
+      return (
+        child !== null &&
+        child !== undefined && (
+          <Col span={spanSize}>{React.cloneElement(child as ReactElement)}</Col>
+        )
+      );
     });
   };
 
+  useEffect(() => {
+    const { default: defaultBreakPoints } = BREAKPOINTS;
+    const filterItem = defaultBreakPoints.filter((item) => {
+      return width >= item[0] && width < item[1];
+    });
+    setSpanSize(24 / filterItem[0][2]);
+  }, [width]);
+  console.log(children);
   return (
     <RcResizeObserver
       onResize={(size) => {
         console.log(size);
+        setWidth(size.width);
       }}
     >
       <div>
@@ -82,7 +93,7 @@ export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) =
         >
           <Row gutter={24} justify="start">
             {renderFormItem()}
-            <Col style={{ textAlign: 'right' }} span={8}>
+            <Col style={{ textAlign: 'right' }} span={spanSize} offset={offsetSize}>
               <Form.Item
                 wrapperCol={{
                   style: {
