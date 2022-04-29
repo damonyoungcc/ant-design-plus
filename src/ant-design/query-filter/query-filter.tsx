@@ -7,7 +7,7 @@ import { mergeProps } from '../../utils/with-default-props';
 import RcResizeObserver from 'rc-resize-observer';
 import isBrowser from '../../utils/is-browser';
 
-interface QueryFilterProps extends FormProps {
+export interface QueryFilterProps extends FormProps {
   children: ReactNode;
   form?: FormInstance;
   defaultCollapsed?: boolean;
@@ -69,7 +69,7 @@ export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) =
     });
     setSpanSize(24 / filterItem[0][2]);
   }, [width]);
-  console.log(children);
+
   return (
     <RcResizeObserver
       onResize={(size) => {
