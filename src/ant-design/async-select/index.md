@@ -6,7 +6,7 @@ group:
 nav:
   title: 组件
   path: /components
-order: 1
+order: 2
 title: 'AsyncSlect 异步选择器'
 mobile: false
 ---

@@ -6,7 +6,7 @@ group:
 nav:
   title: 组件
   path: /components
-order: 2
+order: 3
 title: 'QueryFilter 筛选表单'
 mobile: false
 ---
