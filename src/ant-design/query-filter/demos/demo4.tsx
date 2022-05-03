@@ -1,17 +1,19 @@
 import React from 'react';
-import { Form, Input, Select, DatePicker } from 'antd';
+import { Form, Input, Select } from 'antd';
+
 import { antd } from '@yang/ant-design-plus';
 
 const { QueryFilter } = antd;
 
 export default () => {
+  const [form] = Form.useForm();
   const onFinish = (values: any) => {
     console.log(values);
   };
 
   return (
     <>
-      <QueryFilter onFinish={onFinish}>
+      <QueryFilter onFinish={onFinish} form={form}>
         <Form.Item label="名字" name="name">
           <Input placeholder="请输入名字" />
         </Form.Item>
@@ -23,12 +25,11 @@ export default () => {
             ]}
           />
         </Form.Item>
-        <Form.Item label="身份证号" name="idNo">
-          <Input placeholder="请输入身份证号" />
-        </Form.Item>
-        <Form.Item label="创建日期" name="createDate">
-          <DatePicker placeholder="请选择创建日期" style={{ width: '100%' }} />
-        </Form.Item>
+        {Form.useWatch('gender', form) === 'female' && (
+          <Form.Item name="hobby" label="爱好">
+            <Input />
+          </Form.Item>
+        )}
       </QueryFilter>
     </>
   );
