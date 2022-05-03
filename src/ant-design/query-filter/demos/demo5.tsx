@@ -31,7 +31,7 @@ export default class Demo extends React.Component {
   render() {
     return (
       <>
-        <QueryFilter onFinish={this.onFinish} ref={this.formRef}>
+        <QueryFilter onFinish={this.onFinish} ref={this.formRef} labelWidth={50}>
           <Form.Item label="名字" name="name">
             <Input placeholder="请输入名字" />
           </Form.Item>
@@ -52,14 +52,14 @@ export default class Demo extends React.Component {
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (getFieldValue('gender') === 'female' && !value) {
-                    return Promise.reject(new Error('请输入您的爱好'));
+                    return Promise.reject(new Error('请选择爱好'));
                   }
                   return Promise.resolve();
                 },
               }),
             ]}
           >
-            <Input placeholder="请输入爱好" />
+            <Input placeholder="性别选择female时必填" />
           </Form.Item>
         </QueryFilter>
       </>

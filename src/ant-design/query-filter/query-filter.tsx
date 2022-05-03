@@ -11,7 +11,7 @@ export interface QueryFilterProps extends FormProps {
   children?: ReactNode;
   form?: FormInstance;
   onCollapse?: (collapsed: boolean) => void;
-  labelWidth?: number | 'auto';
+  labelWidth?: number;
 }
 
 const BREAKPOINTS = {

@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <>
-      <QueryFilter onFinish={onFinish}>
+      <QueryFilter onFinish={onFinish} labelWidth={50}>
         <Form.Item label="名字" name="name">
           <Input placeholder="请输入名字" />
         </Form.Item>
