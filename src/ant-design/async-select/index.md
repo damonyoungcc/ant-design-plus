@@ -16,7 +16,7 @@ mobile: false
 ### 何时使用
 
 - 需要异步获取下拉菜单数据给用户选择操作。
-- 完全继承了`antd`中的[Select](https://ant-design.gitee.io/components/select-cn/)组件属性，在此基础上做了相应的拓展和逻辑封装，大大简化了代码。
+- 完全继承了`antd`中的[antd Select](https://ant-design.gitee.io/components/select-cn/)组件属性，在此基础上做了相应的拓展和逻辑封装，大大简化了代码。
 
 ### 基础用法
 
