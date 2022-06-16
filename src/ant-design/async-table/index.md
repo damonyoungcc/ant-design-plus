@@ -22,10 +22,3 @@ mobile: false
 <code src="./demos/demo1.tsx" />
 
 ### API
-
-`QueryFilter` 筛选表单完全继承了[antd Form](https://ant-design.gitee.io/components/form-cn/#API) 组件的`API`
-
-| 属性       | 说明             | 类型                         | 默认值 |
-| ---------- | ---------------- | ---------------------------- | ------ |
-| onCollapse | 展开收起时的回调 | `(collapsed: boolean)=>void` | -      |
-| labelWidth | `label` 宽度     | `number`                     | `80`   |
