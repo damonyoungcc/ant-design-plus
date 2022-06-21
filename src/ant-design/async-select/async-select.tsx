@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/es/select';
-import isFunction from 'lodash/isFunction';
 
 import { mergeProps } from '../../utils/with-default-props';
 import { useRequest } from './use-request';
@@ -48,7 +47,7 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
 
   const onDropdown = (open: boolean) => {
     setOpen(open);
-    if (isFunction(request) && open && !options.length && !loading) {
+    if (open && !options.length && !loading) {
       run();
     }
     onDropdownVisibleChange && onDropdownVisibleChange(open);
