@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/es/select';
+import isFunction from 'lodash/isFunction';
 
 import { mergeProps } from '../../utils/with-default-props';
 import { useRequest } from './use-request';
@@ -11,7 +12,7 @@ export type ActionType = 'auto' | 'open';
 export interface AsyncSelectProps<ValueType = any>
   extends Omit<SelectProps<ValueType>, 'options' | 'children'> {
   trigger?: ActionType;
-  request: () => Promise<ValueType[] | undefined>;
+  request?: () => Promise<ValueType[] | undefined>;
   customOption?: (option: ValueType, index: number, options: ValueType[]) => ReactNode;
   customLoading?: ReactNode;
 }
@@ -24,6 +25,7 @@ export interface DefaultValueType {
 }
 
 const defaultProps = {
+  request: () => {},
   trigger: 'open',
   customLoading: <Spin size="small" />,
 };
@@ -41,11 +43,12 @@ export const AsyncSelect = <ValueType extends DefaultValueType = any>(p: AsyncSe
   } = props;
 
   const [open, setOpen] = useState(o);
+
   const { data: options = [], loading, run } = useRequest<ValueType>(request, trigger);
 
   const onDropdown = (open: boolean) => {
     setOpen(open);
-    if (open && !options.length) {
+    if (isFunction(request) && open && !options.length && !loading) {
       run();
     }
     onDropdownVisibleChange && onDropdownVisibleChange(open);

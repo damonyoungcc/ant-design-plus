@@ -44,7 +44,6 @@ export default () => {
           placeholder="我可以自定义"
           request={async () => {
             const res = await mockAsyncFetchData<ValueType>({
-              delay: 1000,
               options: defaultValues,
             });
             const { data } = res || {};

@@ -27,7 +27,7 @@ export default () => {
           style={{ width: 120 }}
           placeholder="轻点我"
           request={async () => {
-            const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
+            const res = await mockAsyncFetchData<ValueType>();
             const { data } = res || {};
             return data;
           }}

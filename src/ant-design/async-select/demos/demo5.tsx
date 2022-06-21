@@ -25,7 +25,6 @@ export default () => {
           request={async () => {
             try {
               const res = await mockAsyncFetchData<ValueType>({
-                delay: 1000,
                 responseType: 'fail',
               });
               const { data } = res || {};
@@ -44,7 +43,6 @@ export default () => {
           request={async () => {
             try {
               const res = await mockAsyncFetchData<ValueType>({
-                delay: 1000,
                 responseType: 'fail',
               });
               const { data } = res || {};

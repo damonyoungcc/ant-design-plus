@@ -24,7 +24,7 @@ export default () => {
           style={{ width: 150 }}
           placeholder="自定义加载样式"
           customLoading={
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <Space>
                 <ClockCircleOutlined spin />
                 {'加载中...'}
@@ -32,16 +32,11 @@ export default () => {
             </div>
           }
           request={async () => {
-            try {
-              const res = await mockAsyncFetchData<ValueType>({
-                delay: 3000,
-                responseType: 'fail',
-              });
-              const { data } = res || {};
-              return data;
-            } catch (error: any) {
-              console.log(error?.message);
-            }
+            const res = await mockAsyncFetchData<ValueType>({
+              delay: 10000,
+            });
+            const { data } = res || {};
+            return data;
           }}
           onChange={handleChange}
         />

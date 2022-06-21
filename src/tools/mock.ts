@@ -27,8 +27,8 @@ const defaultProps = {
   responseType: 'success',
 };
 
-const mockAsyncFetchData = <T>(props: {
-  delay: number;
+const mockAsyncFetchData = <T>(props?: {
+  delay?: number;
   options?: T[];
   responseType?: ResponseType;
 }): Promise<{ data: T[] }> => {

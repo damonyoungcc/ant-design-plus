@@ -31,7 +31,7 @@ export default () => {
         placeholder="页面挂载时就完成请求"
         style={{ width: 190 }}
         request={async () => {
-          const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
+          const res = await mockAsyncFetchData<ValueType>();
           const { data } = res || {};
           return data;
         }}
@@ -43,7 +43,7 @@ export default () => {
         placeholder="默认展示下拉菜单"
         style={{ width: 190 }}
         request={async () => {
-          const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
+          const res = await mockAsyncFetchData<ValueType>();
           const { data } = res || {};
           return data;
         }}
@@ -54,7 +54,7 @@ export default () => {
         placeholder="展示下拉菜单时发起请求"
         style={{ width: 200 }}
         request={async () => {
-          const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
+          const res = await mockAsyncFetchData<ValueType>();
           const { data } = res || {};
           return data;
         }}
@@ -66,7 +66,7 @@ export default () => {
         placeholder="监听下拉菜单的开关"
         style={{ width: 200 }}
         request={async () => {
-          const res = await mockAsyncFetchData<ValueType>({ delay: 1000 });
+          const res = await mockAsyncFetchData<ValueType>();
           const { data } = res || {};
           return data;
         }}
