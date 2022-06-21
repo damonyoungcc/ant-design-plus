@@ -12,6 +12,7 @@ export interface QueryFilterProps extends FormProps {
   form?: FormInstance;
   onCollapse?: (collapsed: boolean) => void;
   labelWidth?: number;
+  loading?: boolean;
 }
 
 const BREAKPOINTS = {
@@ -26,13 +27,14 @@ const BREAKPOINTS = {
 
 const defaultProps = {
   labelWidth: 80,
+  loading: false,
 };
 
 const defaultWidth = isBrowser() ? document.body.clientWidth : 1024;
 
 export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) => {
   const props = mergeProps(defaultProps, p);
-  const { onCollapse, labelWidth, children, ...restProps } = props;
+  const { onCollapse, labelWidth, children, loading, ...restProps } = props;
 
   const [collapsed, setCollapsed] = useState(false);
   const [width, setWidth] = useState(defaultWidth);
@@ -124,7 +126,7 @@ export const QueryFilter = forwardRef<FormInstance, QueryFilterProps>((p, ref) =
             <Space size={'middle'}>
               <Space>
                 <Button htmlType="reset">重置</Button>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={loading}>
                   查询
                 </Button>
               </Space>

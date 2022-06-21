@@ -8,6 +8,10 @@ import { mockAsyncFetchData } from '../../../tools/mock';
 const { QueryFilter } = antd;
 
 export default class Demo extends React.Component {
+  state = {
+    loading: false,
+  };
+
   formRef = React.createRef<FormInstance>();
 
   componentDidMount() {
@@ -15,13 +19,22 @@ export default class Demo extends React.Component {
   }
 
   initGenderValue = async () => {
-    const defaultGender = await mockAsyncFetchData({
-      delay: 1000,
-      options: [{ label: '男', value: 'male' }],
+    this.setState({
+      loading: true,
     });
-    this.formRef.current?.setFieldsValue({
-      gender: defaultGender?.data[0]?.value,
-    });
+    try {
+      const defaultGender = await mockAsyncFetchData({
+        delay: 3000,
+        options: [{ label: '男', value: 'male' }],
+      });
+      this.formRef.current?.setFieldsValue({
+        gender: defaultGender?.data[0]?.value,
+      });
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   onFinish = (values: any) => {
@@ -29,9 +42,10 @@ export default class Demo extends React.Component {
   };
 
   render() {
+    const { loading } = this.state;
     return (
       <>
-        <QueryFilter onFinish={this.onFinish} ref={this.formRef} labelWidth={50}>
+        <QueryFilter onFinish={this.onFinish} ref={this.formRef} labelWidth={50} loading={loading}>
           <Form.Item label="名字" name="name">
             <Input placeholder="请输入名字" />
           </Form.Item>
