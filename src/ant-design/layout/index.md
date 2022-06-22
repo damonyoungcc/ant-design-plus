@@ -21,7 +21,7 @@ mobile: false
 
 默认异步返回的数据结构为 `{label: ReactNode; value: string}`
 
-<code src="./demos/demo1.tsx" />
+<code src="./demos/demo1.js" />
 
 ### API
 
