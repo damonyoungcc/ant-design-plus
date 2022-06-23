@@ -3,7 +3,6 @@ import Sider from './siderLayout';
 import Top from './topLayout';
 
 import { mergeProps } from '../utils';
-import { render } from '@testing-library/react';
 import { defaultLayoutProps } from './constant';
 
 const Layout = (p) => {

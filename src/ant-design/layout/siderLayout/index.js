@@ -38,7 +38,7 @@ const SiderLayout = ({ layout, ...p }) => {
         <Layout>
           {renderSiderDom()}
           <div className={`${classPrefix}-siderLayout-main`}>
-            {/* {renderHeaderDom()} */}
+            {renderHeaderDom()}
             {renderContentDom()}
           </div>
         </Layout>
