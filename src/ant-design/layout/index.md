@@ -21,9 +21,15 @@ mobile: false
 
 默认异步返回的数据结构为 `{label: ReactNode; value: string}`
 
-<code src="./demos/demo1.js" />
-<code src="./demos/demo2.js" />
-<code src="./demos/demo3.js" />
+<code src="./demos/demo1.js" iframe="500px" />
+
+### 基础用法
+
+<code src="./demos/demo2.js" iframe="500px" />
+
+### 基础用法
+
+<code src="./demos/demo3.js" iframe="500px" />
 
 ### API
 

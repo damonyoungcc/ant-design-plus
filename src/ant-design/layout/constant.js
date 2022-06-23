@@ -1,6 +1,5 @@
 export const defaultLayoutProps = {
   title: '通用后台管理',
-  logo: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
   collapsed: false,
   layout: 'sider',
   fixedHeader: true,
